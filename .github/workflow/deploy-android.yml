@@ -1,0 +1,43 @@
+name: Deploy .NET MAUI Android to Firebase
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Install MAUI workloads
+      run: dotnet workload install maui-android
+
+    - name: Decode Keystore
+      run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > myapp.keystore
+
+    - name: Build Android Release
+      run: dotnet publish MyMauiApp.csproj -c Release -f net8.0-android \
+           /p:AndroidKeyStore=true \
+           /p:AndroidSigningKeyStore=myapp.keystore \
+           /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD \
+           /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS \
+           /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
+
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+
+    - name: Upload to Firebase App Distribution
+      run: |
+        firebase appdistribution:distribute \
+          MyMauiApp/bin/Release/net8.0-android/*.aab \
+          --app "1:465579466012:android:c83e610631fb28d74deed9" \
+          --groups "testers" \
+          --token "$FIREBASE_TOKEN"

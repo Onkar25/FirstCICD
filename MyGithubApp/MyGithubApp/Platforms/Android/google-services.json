@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "465579466012",
+    "project_id": "mygithubapp-b2759",
+    "storage_bucket": "mygithubapp-b2759.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465579466012:android:c83e610631fb28d74deed9",
+        "android_client_info": {
+          "package_name": "com.crookstechno.mygithubapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9LD3cm02cSloZBKvnFnLdix0ATySeNDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
