@@ -24,7 +24,7 @@ jobs:
       run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > myapp.keystore
 
     - name: Build Android Release
-      run: dotnet publish MyMauiApp.csproj -c Release -f net8.0-android \
+      run: dotnet publish MyGithubApp.csproj -c Release -f net8.0-android \
            /p:AndroidKeyStore=true \
            /p:AndroidSigningKeyStore=myapp.keystore \
            /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD \
@@ -37,7 +37,7 @@ jobs:
     - name: Upload to Firebase App Distribution
       run: |
         firebase appdistribution:distribute \
-          MyMauiApp/bin/Release/net8.0-android/*.aab \
+          MyGithubApp/bin/Release/net8.0-android/*.aab \
           --app "1:465579466012:android:c83e610631fb28d74deed9" \
           --groups "testers" \
           --token "$FIREBASE_TOKEN"
