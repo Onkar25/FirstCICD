@@ -23,6 +23,10 @@ jobs:
     - name: Decode Keystore
       run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > myapp.keystore
 
+    - name: List files for debugging
+      run: |
+        ls -R
+
     - name: Build Android Release
       run: dotnet publish MyGithubApp/MyGithubApp.csproj -c Release -f net8.0-android /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
 
