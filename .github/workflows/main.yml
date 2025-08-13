@@ -27,6 +27,13 @@ jobs:
       run: |
         ls -R 
 
+    - name: Check required secrets
+      run: |
+        if [ -z "$ANDROID_KEYSTORE_BASE64" ] || [ -z "$ANDROID_KEYSTORE_PASSWORD" ] || [ -z "$ANDROID_KEY_ALIAS" ] || [ -z "$ANDROID_KEY_ALIAS_PASSWORD" ]; then
+          echo "One or more required secrets are missing."
+          exit 1
+        fi
+
     - name: Build Android Release
       run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj -c Release -f net8.0-android /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
 
