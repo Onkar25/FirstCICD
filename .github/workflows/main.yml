@@ -65,8 +65,9 @@ jobs:
 
     - name: Upload to Firebase App Distribution
       run: |
+        AAB_FILE=$(find MyGithubApp/MyGithubApp/bin/Release/net8.0-android/publish -name "*Signed.aab" | head -n 1)
         firebase appdistribution:distribute \
-          MyGithubApp/MyGithubApp/bin/Release/net8.0-android/*.aab \
+          "$AAB_FILE" \
           --app "1:465579466012:android:c83e610631fb28d74deed9" \
           --groups "testers" \
           --token "$FIREBASE_TOKEN"
