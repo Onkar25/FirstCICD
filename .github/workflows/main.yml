@@ -48,13 +48,7 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
     - name: Build Android Release
-      run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj \
-          -c Release -f net8.0-android \
-          /p:AndroidKeyStore=true \
-          /p:AndroidSigningKeyStore=myapp.keystore \
-          /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD \
-          /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS \
-          /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
+      run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj -c Release -f net8.0-android /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
       env:
         ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
@@ -72,3 +66,6 @@ jobs:
           --token "$FIREBASE_TOKEN"
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    - name: List files for debugging
+      run: ls -R
