@@ -13,7 +13,8 @@ jobs:
       ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       ANDROID_KEY_ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }}
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      
+      GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -63,11 +64,14 @@ jobs:
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
 
-    - name: Upload to Firebase App Distribution
+    - name: Set up Google Credentials
       run: |
-        AAB_FILE=$(find MyGithubApp/MyGithubApp/bin/Release/net8.0-android/publish -name "*Signed.aab" | head -n 1)
+        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $HOME/google-credentials.json
+
+    - name: Distribute to Firebase App Distribution
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS="$HOME/google-credentials.json"
         firebase appdistribution:distribute \
-          "$AAB_FILE" \
+          MyGithubApp/MyGithubApp/bin/Release/net8.0-android/com.crookstechno.mygithubapp-Signed.aab \
           --app "1:465579466012:android:c83e610631fb28d74deed9" \
-          --groups "testers" \
-          --token "$FIREBASE_TOKEN"
+          --groups "testers"
