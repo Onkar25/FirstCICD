@@ -69,4 +69,5 @@ jobs:
           MyGithubApp/MyGithubApp/bin/Release/net8.0-android/*.aab \
           --app "1:465579466012:android:c83e610631fb28d74deed9" \
           --groups "testers" \
-          --token "$FIREBASE_TOKEN"
+          --token "$FIREBASE_TOKEN" || (echo "Firebase App Distribution failed. Listing .aab files:" && find MyGithubApp/MyGithubApp/bin/Release/net8.0-android -name '*.aab' && exit 1)
+
