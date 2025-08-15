@@ -44,14 +44,7 @@ jobs:
         fi
 
     - name: Build Android Release
-      run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj \
-        -c Release \
-        -f net8.0-android \
-        /p:AndroidKeyStore=true \
-        /p:AndroidSigningKeyStore=myapp.keystore \
-        /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD \
-        /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS \
-        /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
+      run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj -c Release -f net8.0-android /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
 
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
