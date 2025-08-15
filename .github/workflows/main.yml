@@ -24,8 +24,10 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Install MAUI workloads
-      run: dotnet workload install maui-android
+    - name: Install .NET MAUI and Android workload
+      run: |
+        dotnet workload install maui
+        dotnet workload install maui-android
 
     - name: Decode Keystore
       run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > myapp.keystore
