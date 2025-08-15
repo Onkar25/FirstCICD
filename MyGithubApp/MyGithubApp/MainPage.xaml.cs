@@ -51,7 +51,7 @@ public partial class MainPage : ContentPage
 			// Simulate some faulty logic
 			throw new InvalidOperationException("⚠️ This is a test error for Dynatrace");
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
 			// Report error to Dynatrace without crashing the app
 			myAction.ReportError("Test Error occurred", -1);
