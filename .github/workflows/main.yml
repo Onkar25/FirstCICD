@@ -54,6 +54,7 @@ jobs:
 
     - name: Deploy to Firebase Hosting
       run: firebase deploy --only hosting
+      working-directory: ${{ github.workspace }}
 
     # Uncomment if using Firebase App Distribution
     # - name: Distribute to Firebase App Distribution
