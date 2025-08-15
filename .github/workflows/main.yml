@@ -52,14 +52,17 @@ jobs:
     - name: Set up GCP credentials
       run: echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > "$GOOGLE_APPLICATION_CREDENTIALS"
 
-    - name: Deploy to Firebase Hosting
-      run: firebase deploy --only hosting
-      working-directory: ${{ github.workspace }}
+    - name: List files in workspace for debugging
+      run: ls -al ${{ github.workspace }}
+
+    # - name: Deploy to Firebase Hosting
+    #   run: firebase deploy --only hosting
+    #   working-directory: ${{ github.workspace }}
 
     # Uncomment if using Firebase App Distribution
-    # - name: Distribute to Firebase App Distribution
-    #   run: |
-    #     firebase appdistribution:distribute \
-    #       MyGithubApp/MyGithubApp/bin/Release/net8.0-android/com.crookstechno.mygithubapp-Signed.aab \
-    #       --app "1:465579466012:android:c83e610631fb28d74deed9" \
-    #       --groups "testers"
+    - name: Distribute to Firebase App Distribution
+      run: |
+        firebase appdistribution:distribute \
+          MyGithubApp/MyGithubApp/bin/Release/net8.0-android/com.crookstechno.mygithubapp-Signed.aab \
+          --app "1:465579466012:android:c83e610631fb28d74deed9" \
+          --groups "testers"
