@@ -1,4 +1,4 @@
-name: Deploy .NET MAUI Android to Firebase
+name: Build & Distribute .NET MAUI Android App to Firebase
 
 on:
   push:
@@ -52,17 +52,10 @@ jobs:
     - name: Set up GCP credentials
       run: echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > "$GOOGLE_APPLICATION_CREDENTIALS"
 
-    - name: List files in workspace for debugging
-      run: ls -al ${{ github.workspace }}
-
-    # - name: Deploy to Firebase Hosting
-    #   run: firebase deploy --only hosting
-    #   working-directory: ${{ github.workspace }}
-
-    # Uncomment if using Firebase App Distribution
     - name: Distribute to Firebase App Distribution
       run: |
         firebase appdistribution:distribute \
           MyGithubApp/MyGithubApp/bin/Release/net8.0-android/com.crookstechno.mygithubapp-Signed.aab \
           --app "1:465579466012:android:c83e610631fb28d74deed9" \
-          --groups "testers"
+          --groups "testers" \
+          --release-notes "Automated build from GitHub Actions"
