@@ -44,7 +44,16 @@ jobs:
         fi
 
     - name: Build Android Release
-      run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj -c Release -f net8.0-android /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD
+      run: dotnet publish MyGithubApp/MyGithubApp/MyGithubApp.csproj \
+        -c Release \
+        -f net8.0-android \
+        /p:AndroidKeyStore=true \
+        /p:AndroidPackageFormat=apk \
+        /p:AndroidSigningKeyStore=myapp.keystore \
+        /p:AndroidSigningStorePass=$ANDROID_KEYSTORE_PASSWORD \
+        /p:AndroidSigningKeyAlias=$ANDROID_KEY_ALIAS \
+        /p:AndroidSigningKeyPass=$ANDROID_KEY_ALIAS_PASSWORD 
+
 
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
@@ -55,7 +64,7 @@ jobs:
     - name: Distribute to Firebase App Distribution
       run: |
         firebase appdistribution:distribute \
-          MyGithubApp/MyGithubApp/bin/Release/net8.0-android/com.crookstechno.mygithubapp-Signed.aab \
-          --app "1:465579466012:android:c83e610631fb28d74deed9" \
-          --groups "testers" \
-          --release-notes "Automated build from GitHub Actions"
+        MyGithubApp/MyGithubApp/bin/Release/net8.0-android/com.crookstechno.mygithubapp-Signed.apk \
+        --app "1:465579466012:android:c83e610631fb28d74deed9" \
+        --groups "testers" \
+        --release-notes "Automated build from GitHub Actions"
